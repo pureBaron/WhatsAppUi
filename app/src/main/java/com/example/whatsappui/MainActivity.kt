@@ -3,15 +3,21 @@ package com.example.whatsappui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.recycler_item.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() , PopupMenu.OnMenuItemClickListener{
 
     private val contactList = ArrayList<Contacts>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
@@ -26,9 +32,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate()
+        val pop = PopupMenu(this, menuBtn)
+        pop.menuInflater.inflate(R.menu.menu, pop.menu)
+        pop.setOnMenuItemClickListener(this)
+        menuBtn.setOnClickListener{
+            pop.show()
+        }
         return true
     }
+
+
 
 
     private fun initList(){
@@ -43,5 +56,10 @@ class MainActivity : AppCompatActivity() {
 
             }
         }
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+
+        return false
     }
 }
